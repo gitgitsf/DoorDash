@@ -1,12 +1,12 @@
 package com.sunmonkeyapps.doordash.ui;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.sunmonkeyapps.doordash.R;
@@ -21,10 +21,11 @@ public class DiscoverActivity extends AppCompatActivity  implements DiscoverView
     private static final String TAG = "DiscoverActivity";
 
     DiscoverPresenter mPresenter;
+    Context mContext;
 
     RecyclerView.LayoutManager layoutManager;
     RecyclerView rvRestaurant;
-    ProgressBar progressBar;
+    ProgressDialog pDialog;
 
     List<Restaurant> mRestaurantList;
 
@@ -33,8 +34,9 @@ public class DiscoverActivity extends AppCompatActivity  implements DiscoverView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 
-        // Change the activity title on toolbar here  
+        // Change the activity title on toolbar here
         setTitle(getResources().getString(R.string.discover_name));
+
 
         initLayout();
 
@@ -57,7 +59,6 @@ public class DiscoverActivity extends AppCompatActivity  implements DiscoverView
         Log.d(TAG, "showRestaurantFromApi: ");
 
         if (restaurantList !=null) {
-            Log.d(TAG, "showRestaurantFromApi: " + restaurantList.size());
 
             rvRestaurant.setAdapter(new RestaurantAdapter(restaurantList));
             rvRestaurant.getAdapter().notifyDataSetChanged();
@@ -75,20 +76,30 @@ public class DiscoverActivity extends AppCompatActivity  implements DiscoverView
     @Override
     public void showPorgressBar() {
         Log.d(TAG, "showPorgressBar: ");
-        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setVisibility(View.VISIBLE);
+        pDialog = new ProgressDialog(mContext);
+        // Set progress dialog title
+//        pDialog.setTitle("Restaurant");
+        // Set progress dialog message
+        pDialog.setMessage("Loading...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        // Show progressbar
+        pDialog.show();
     }
 
     @Override
     public void hidePorgressBar() {
-
-        progressBar.setVisibility(View.GONE);
+        Log.d(TAG, "hidePorgressBar: ");
+        // Hide progressbar
+        pDialog.dismiss();
     }
 
     private void initLayout() {
 
         rvRestaurant = (RecyclerView) findViewById(R.id.rvRestaurants);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        mContext =this;
         layoutManager =new LinearLayoutManager(this);
         rvRestaurant.setHasFixedSize(true );
         rvRestaurant.setLayoutManager(layoutManager);

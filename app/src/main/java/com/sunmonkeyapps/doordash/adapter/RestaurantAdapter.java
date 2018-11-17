@@ -58,7 +58,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         item.tvDescription.setText(mRestaurant.getDescription());
         item.tvStatus.setText(mRestaurant.getStatus());
 
-
     }
 
     @Override

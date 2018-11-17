@@ -68,11 +68,9 @@ public class DiscoverPresenterImpl implements DiscoverPresenter  {
             }
         });
 
-
-
     }
 
-    private Retrofit createRetrofitObject() {
+    public static Retrofit createRetrofitObject() {
 
         return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_RESTAURANT_URL)

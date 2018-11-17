@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Restaurant{
 
+	@SerializedName("phone_number")
+	private Object phoneNumber;
+
 	@SerializedName("max_order_size")
 	private Object maxOrderSize;
 
@@ -103,6 +106,16 @@ public class Restaurant{
 
 	@SerializedName("promotion")
 	private Object promotion;
+
+	public void setPhoneNumber(Object phoneNumber){
+		this.phoneNumber = phoneNumber;
+	}
+
+	public Object getPhoneNumber(){
+		return phoneNumber;
+	}
+
+
 
 	public void setMaxOrderSize(Object maxOrderSize){
 		this.maxOrderSize = maxOrderSize;
@@ -363,8 +376,9 @@ public class Restaurant{
 	@Override
  	public String toString(){
 		return 
-			"Restaurant{" + 
-			"max_order_size = '" + maxOrderSize + '\'' + 
+			"Restaurant{" +
+					"phone_number = '" + phoneNumber + '\'' +
+					"max_order_size = '" + maxOrderSize + '\'' +
 			",is_time_surging = '" + isTimeSurging + '\'' + 
 			",status_type = '" + statusType + '\'' + 
 			",merchant_promotions = '" + merchantPromotions + '\'' + 

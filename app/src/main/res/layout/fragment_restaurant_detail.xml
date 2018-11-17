@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/flRestaurantDetail"
+    android:orientation="vertical"
+    tools:context=".ui.detail.RestaurantDetailFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/include"
+                layout="@layout/restaurant_item" />
+
+            <TextView
+                android:id="@+id/tvRate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include"
+                tools:text="5" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:background="@android:color/holo_blue_bright"
+                android:max="5"
+                android:numStars="5"
+                android:stepSize="0.1"
+                app:layout_constraintStart_toEndOf="@+id/tvRate"
+                app:layout_constraintTop_toTopOf="@+id/tvRate" />
+
+
+            <TextView
+                android:id="@+id/tvYelpReviewCount"
+                android:layout_width="136dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.741"
+                app:layout_constraintStart_toEndOf="@+id/ratingBar"
+                app:layout_constraintTop_toTopOf="@+id/ratingBar"
+                tools:text="1999 Yelp Review" />
+
+            <TextView
+                android:id="@+id/tvAddressLabel"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:padding="3dp"
+                android:text="@string/text_address"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRate" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="224dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@+id/tvAddressLabel"
+                app:layout_constraintTop_toTopOf="@+id/tvAddressLabel"
+                tools:text="101 highway sf ca 94111" />
+
+            <TextView
+                android:id="@+id/tvPhoneLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_phone"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tvAddressLabel"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddressLabel" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.666"
+                app:layout_constraintStart_toEndOf="@+id/tvPhoneLabel"
+                app:layout_constraintTop_toTopOf="@+id/tvPhoneLabel"
+                tools:text="TextView" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="20dp" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>
