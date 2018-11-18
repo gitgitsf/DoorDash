@@ -70,7 +70,7 @@ public class DiscoverPresenterImpl implements DiscoverPresenter  {
 
     }
 
-    public static Retrofit createRetrofitObject() {
+    public  Retrofit createRetrofitObject() {
 
         return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_RESTAURANT_URL)

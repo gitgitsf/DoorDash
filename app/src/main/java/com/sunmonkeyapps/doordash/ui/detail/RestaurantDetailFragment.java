@@ -19,16 +19,17 @@ import com.sunmonkeyapps.doordash.R;
 import com.sunmonkeyapps.doordash.api.RestaurantApi;
 import com.sunmonkeyapps.doordash.app.Constants;
 import com.sunmonkeyapps.doordash.model.Restaurant;
-import com.sunmonkeyapps.doordash.ui.DiscoverPresenterImpl;
 import com.sunmonkeyapps.doordash.util.UiUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RestaurantDetailFragment extends Fragment {
@@ -37,8 +38,9 @@ public class RestaurantDetailFragment extends Fragment {
 
     int restaurantId=0;
     Context mContext;
-
     ProgressDialog pDialog;
+    private Unbinder unbinder;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Nullable @BindView(R.id.ivRestaurant)
     ImageView ivRestaurant;
@@ -55,7 +57,6 @@ public class RestaurantDetailFragment extends Fragment {
     @Nullable @BindView(R.id.tvRate)
     TextView tvRate;
 
-
     @Nullable @BindView(R.id.tvYelpReviewCount)
     TextView tvYelpReviewCount;
 
@@ -67,8 +68,6 @@ public class RestaurantDetailFragment extends Fragment {
 
     @Nullable @BindView(R.id.tvPhone)
     TextView tvPhone;
-
-    private Unbinder unbinder;
 
 
     public RestaurantDetailFragment() {
@@ -118,43 +117,60 @@ public class RestaurantDetailFragment extends Fragment {
         unbinder.unbind();
     }
 
-
     private void getDataFromApiAndUpdateView() {
-        Log.d(TAG, "getDataFromApi: ");
+        Log.d(TAG, "getDataFromApiAndUpdateView: ");
 
-        Retrofit retrofit = DiscoverPresenterImpl.createRetrofitObject();
+
+        Retrofit retrofit = createRetrofitObjectForRxJava();
         final RestaurantApi restaurantApi = retrofit.create(RestaurantApi.class);
 
         showProgressBar();
-        
-        Call<Restaurant> call = restaurantApi.getArestaurant(restaurantId);
-        call.enqueue(new Callback<Restaurant>() {
-            @Override
-            public void onResponse(Call<Restaurant> call, Response<Restaurant> response) {
 
-                if (response.body() == null) {
-                    Log.e(TAG, "onResponse: No data return from api "  );
-                    showErrorMessageOnDetailScreen(Constants.NO_DATA_FROM_API);
+        compositeDisposable.add(
+             restaurantApi.getArestaurantUsingRxJava(restaurantId)
+             .observeOn(AndroidSchedulers.mainThread())
+             .subscribeOn(Schedulers.io())
+             .subscribe(this::handleResponse, this::handleError)
+        );
 
-                } else {
-                    Restaurant mRestaurant = response.body();;
-                    showRestaurantDataFromApi(mRestaurant);
-                }
-            }
+    }
 
-            @Override
-            public void onFailure(Call<Restaurant> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage() );
+    /**
+     *
+     * @param restaurant
+     *
+     * Process onResponse with Restaurant object returned
+     */
 
-                showErrorMessageOnDetailScreen(t.getMessage());
-            }
-        });
+    private void handleResponse(Restaurant restaurant) {
+        Log.d(TAG, "handleResponse: ");
+
+        if (restaurant == null) {
+            Log.e(TAG, "onResponse: No data return from api "  );
+            showErrorMessageOnDetailScreen(Constants.NO_DATA_FROM_API);
+        } else {
+            showRestaurantDataFromApi(restaurant);
+        }
+    }
+
+    /**
+     *
+     * @param t
+     * porcess onFailure with Throwable object returned
+     */
+    private void handleError(Throwable t) {
+        Log.e(TAG, "onFailure: " + t.getMessage() );
+
+        showErrorMessageOnDetailScreen(t.getMessage());
     }
 
     private void showErrorMessageOnDetailScreen(String message) {
         //to do show in tvName
         hideProgressBar();
         tvName.setText(message);
+
+        compositeDisposable.clear();
+
     }
 
     private void showRestaurantDataFromApi( Restaurant mRestaurant) {
@@ -181,6 +197,9 @@ public class RestaurantDetailFragment extends Fragment {
 
         // show phone # 12343214567 - ignore 1 reformat to (234) 321-4567
         tvPhone.setText(UiUtil.formatPhone(mRestaurant.getPhoneNumber() + ""));
+
+        compositeDisposable.clear();
+
     }
 
     private void showProgressBar() {
@@ -200,6 +219,17 @@ public class RestaurantDetailFragment extends Fragment {
     private void hideProgressBar() {
         Log.d(TAG, "hideProgressBar: ");
         pDialog.dismiss();
+    }
+
+    public   Retrofit createRetrofitObjectForRxJava() {
+
+        // for RxJava add:  addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+
+        return new Retrofit.Builder()
+                .baseUrl(Constants.BASE_RESTAURANT_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
     }
 
 }
