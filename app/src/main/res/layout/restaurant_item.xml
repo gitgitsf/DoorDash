@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
+    android:layout_gravity="center_horizontal"
     app:cardUseCompatPadding="true">
 
     <android.support.constraint.ConstraintLayout
@@ -49,7 +51,7 @@
 
         <TextView
             android:id="@+id/tvStatus"
-            android:layout_width="80dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
@@ -61,7 +63,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/tvDescription"
             app:layout_constraintTop_toTopOf="@+id/tvDescription"
-            tools:text="22 mins" />
+            tools:text="22 mins -56min" />
 
 
     </android.support.constraint.ConstraintLayout>
