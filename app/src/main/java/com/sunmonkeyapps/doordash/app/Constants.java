@@ -3,7 +3,7 @@ package com.sunmonkeyapps.doordash.app;
 public class Constants {
 
 
-    public static String NO_DATA_FROM_API = "No data available right now - please try agagin later.";
+    public static String NO_DATA_FROM_API = "No data available right now - please try again later.";
     public static String BASE_RESTAURANT_URL = "https://api.doordash.com/";
 
     public static double LAT = 37.422740;

@@ -21,6 +21,16 @@ public interface RestaurantApi {
 
     );
 
+    // retrieve for a given lat & lng
+    @GET("v2/restaurant")
+    io.reactivex.Observable<List<Restaurant>> getRestaurantsUsingRxJava(
+            @Query("lat") double lat,
+            @Query("lng") double lng,
+            @Query("offset") int offset,
+            @Query("limit") int limit
+
+    );
+
     // retrieve a restaurant for the given restraurant id
     @GET("v2/restaurant/{restaurantId}")
     Call<Restaurant> getArestaurant(

@@ -26,10 +26,10 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="0dp"
+            android:layout_width="227dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
@@ -41,8 +41,10 @@
 
         <TextView
             android:id="@+id/tvDescription"
-            android:layout_width="145dp"
+            android:layout_width="155dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvName"
@@ -51,19 +53,20 @@
 
         <TextView
             android:id="@+id/tvStatus"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="8dp"
+            android:paddingStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/tvDescription"
             app:layout_constraintTop_toTopOf="@+id/tvDescription"
-            tools:text="22 mins -56min" />
+            tools:text="22 - 40 mins" />
 
 
     </android.support.constraint.ConstraintLayout>
